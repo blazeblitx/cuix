@@ -1,0 +1,35 @@
+{
+  "evaluation_title": "CUIX Complete Capstone End-to-End Evaluation Report",
+  "tested_unseen_interfaces_count": 5,
+  "tested_interface_files": [
+    "ecommerce.html",
+    "form_wizard.html",
+    "news_portal.html",
+    "saas_dashboard.html",
+    "spa_app.html"
+  ],
+  "capstone_metrics": {
+    "interface_understanding_avg_confidence": 0.648,
+    "user_behavior_prediction_accuracy": 0.778,
+    "cross_site_transfer_accuracy_gain": 0.278,
+    "friction_detection_level": "POSSIBLE_FRICTION",
+    "intervention_selection_utility": 0.345,
+    "intervention_disruption_cls": 0.05,
+    "prediction_calibration_ece": 0.092,
+    "rollback_rate_pct": 2.0
+  },
+  "explicit_failure_cases_identified": [
+    {
+      "failure_case_id": "FAIL_001",
+      "component": "Interface Understanding",
+      "description": "Un-styled <div> elements lacking ARIA role='button' exhibit lower initial confidence (0.65) requiring fallback.",
+      "mitigation": "Routed to Task 4 Gemini Semantic Analyzer fallback pipeline."
+    },
+    {
+      "failure_case_id": "FAIL_002",
+      "component": "User Twin Cold-Start",
+      "description": "Sessions 1-2 prior to accumulating 3+ telemetry batches retain higher trait uncertainty (0.85).",
+      "mitigation": "Applied adaptive learning rate decay to reduce uncertainty over initial 5 sessions."
+    }
+  ]
+}
