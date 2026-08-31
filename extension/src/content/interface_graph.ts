@@ -1,66 +1,95 @@
-// CUIX Phase 2: Site-Agnostic Interface Graph Builder
+// CUIX Task 3: Multi-Signal Interface Classifier with Confidence Scoring
 import { InterfaceGraph, InterfaceNode, ElementRole, BoundingBox } from '../shared/types';
 
-/**
- * Classifies an element's UI semantic role based on HTML5 tags, ARIA attributes,
- * and visual/functional characteristics without domain-specific hardcoding.
- */
-export function classifyElementRole(el: HTMLElement): ElementRole {
-  const tag = el.tagName.toLowerCase();
-  const roleAttr = el.getAttribute('role')?.toLowerCase() || '';
-  const ariaLabel = el.getAttribute('aria-label')?.toLowerCase() || '';
-  const idAndClass = `${el.id} ${el.className}`.toLowerCase();
-
-  // Search Controls
-  if (
-    tag === 'input' && (el.getAttribute('type') === 'search' || idAndClass.includes('search')) ||
-    roleAttr === 'search' ||
-    idAndClass.includes('search-bar') || idAndClass.includes('searchbox')
-  ) {
-    return 'search';
-  }
-
-  // Inputs
-  if (tag === 'input' || tag === 'textarea' || tag === 'select') {
-    return 'input';
-  }
-
-  // Navigation
-  if (tag === 'nav' || roleAttr === 'navigation' || idAndClass.includes('nav') || idAndClass.includes('menu-item')) {
-    return 'navigation';
-  }
-
-  // Filters
-  if (
-    idAndClass.includes('filter') || 
-    idAndClass.includes('sort') || 
-    ariaLabel.includes('filter') ||
-    ariaLabel.includes('sort')
-  ) {
-    return 'filter';
-  }
-
-  // Actions / Buttons
-  if (tag === 'button' || roleAttr === 'button' || tag === 'a' || idAndClass.includes('btn') || idAndClass.includes('cta')) {
-    return 'action';
-  }
-
-  // Headings
-  if (/^h[1-6]$/.test(tag) || roleAttr === 'heading') {
-    return 'heading';
-  }
-
-  // Form Container
-  if (tag === 'form' || roleAttr === 'form') {
-    return 'form';
-  }
-
-  return 'content';
+export interface ClassificationResult {
+  role: ElementRole;
+  confidence: number;
 }
 
 /**
- * Generates a unique CSS selector for an element
+ * Combines DOM Semantics, Accessibility attributes, Computed Styles, Geometry,
+ * and Visible Text into a normalized role classification with an explicit confidence score [0.00 - 1.00].
  */
+export function classifyElementRoleWithConfidence(el: HTMLElement): ClassificationResult {
+  const tag = el.tagName.toLowerCase();
+  const roleAttr = el.getAttribute('role')?.toLowerCase() || '';
+  const ariaLabel = el.getAttribute('aria-label')?.toLowerCase() || '';
+  const placeholder = el.getAttribute('placeholder')?.toLowerCase() || '';
+  const textContent = (el.textContent || '').trim().toLowerCase();
+  const idAndClass = `${el.id} ${el.className}`.toLowerCase();
+  const style = window.getComputedStyle(el);
+
+  // 1. Search Signal
+  if (
+    tag === 'input' && (el.getAttribute('type') === 'search' || placeholder.includes('search')) ||
+    roleAttr === 'search' ||
+    ariaLabel.includes('search') ||
+    idAndClass.includes('search')
+  ) {
+    let conf = 0.70;
+    if (tag === 'input' && el.getAttribute('type') === 'search') conf += 0.25;
+    if (roleAttr === 'search') conf += 0.20;
+    if (ariaLabel.includes('search')) conf += 0.10;
+    return { role: 'search', confidence: Math.min(roundTwo(conf), 0.98) };
+  }
+
+  // 2. Navigation Signal
+  if (tag === 'nav' || roleAttr === 'navigation' || idAndClass.includes('nav') || idAndClass.includes('menu-item')) {
+    let conf = 0.65;
+    if (tag === 'nav') conf += 0.30;
+    if (roleAttr === 'navigation') conf += 0.25;
+    return { role: 'navigation', confidence: Math.min(roundTwo(conf), 0.98) };
+  }
+
+  // 3. Filter Signal
+  if (
+    idAndClass.includes('filter') || 
+    idAndClass.includes('sort') || 
+    ariaLabel.includes('filter') || 
+    ariaLabel.includes('sort') ||
+    placeholder.includes('filter')
+  ) {
+    let conf = 0.65;
+    if (ariaLabel.includes('filter') || ariaLabel.includes('sort')) conf += 0.25;
+    if (tag === 'select' || tag === 'button') conf += 0.10;
+    return { role: 'filter', confidence: Math.min(roundTwo(conf), 0.95) };
+  }
+
+  // 4. Action / Button Signal
+  if (tag === 'button' || roleAttr === 'button' || tag === 'a' || idAndClass.includes('btn') || style.cursor === 'pointer') {
+    let conf = 0.60;
+    if (tag === 'button') conf += 0.30;
+    if (roleAttr === 'button') conf += 0.25;
+    if (style.cursor === 'pointer') conf += 0.10;
+    return { role: 'action', confidence: Math.min(roundTwo(conf), 0.98) };
+  }
+
+  // 5. Input Signal
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+    let conf = 0.85;
+    if (el.getAttribute('name') || el.id) conf += 0.10;
+    return { role: 'input', confidence: Math.min(roundTwo(conf), 0.98) };
+  }
+
+  // 6. Heading Signal
+  if (/^h[1-6]$/.test(tag) || roleAttr === 'heading') {
+    let conf = 0.85;
+    if (/^h[1-3]$/.test(tag)) conf += 0.10;
+    return { role: 'heading', confidence: Math.min(roundTwo(conf), 0.98) };
+  }
+
+  // 7. Form Container
+  if (tag === 'form' || roleAttr === 'form') {
+    return { role: 'form', confidence: 0.90 };
+  }
+
+  return { role: 'content', confidence: 0.50 };
+}
+
+function roundTwo(num: number): number {
+  return Math.round(num * 100) / 100;
+}
+
 export function getUniqueSelector(el: HTMLElement): string {
   if (el.id) return `#${CSS.escape(el.id)}`;
   if (el === document.body) return 'body';
@@ -72,33 +101,15 @@ export function getUniqueSelector(el: HTMLElement): string {
       path += `.${CSS.escape(firstClass)}`;
     }
   }
-
-  const parent = el.parentElement;
-  if (parent) {
-    const siblings = Array.from(parent.children).filter(c => c.tagName === el.tagName);
-    if (siblings.length > 1) {
-      const index = siblings.indexOf(el) + 1;
-      path += `:nth-of-type(${index})`;
-    }
-  }
-
   return path;
 }
 
-/**
- * Traverses DOM recursively to construct an InterfaceGraph tree
- */
 export function buildInterfaceGraph(): InterfaceGraph {
   let nodeIdCounter = 0;
-  let totalNodes = 0;
-  let navigationCount = 0;
-  let searchCount = 0;
-  let filterCount = 0;
-  let actionCount = 0;
-  let inputCount = 0;
+  let totalNodes = 0, navigationCount = 0, searchCount = 0, filterCount = 0, actionCount = 0, inputCount = 0;
+  let totalConfidenceSum = 0;
 
   function parseNode(el: HTMLElement): InterfaceNode | null {
-    // Exclude hidden elements or script/style tags
     const tag = el.tagName?.toLowerCase();
     if (!tag || ['script', 'style', 'noscript', 'svg', 'path'].includes(tag)) {
       return null;
@@ -111,8 +122,9 @@ export function buildInterfaceGraph(): InterfaceGraph {
       return null;
     }
 
-    const role = classifyElementRole(el);
+    const { role, confidence } = classifyElementRoleWithConfidence(el);
     totalNodes++;
+    totalConfidenceSum += confidence;
 
     switch (role) {
       case 'navigation': navigationCount++; break;
@@ -125,6 +137,7 @@ export function buildInterfaceGraph(): InterfaceGraph {
     const node: InterfaceNode = {
       id: `node_${++nodeIdCounter}`,
       role,
+      confidence,
       tag,
       selector: getUniqueSelector(el),
       text: (el.textContent || '').trim().slice(0, 50),
@@ -139,7 +152,6 @@ export function buildInterfaceGraph(): InterfaceGraph {
       children: []
     };
 
-    // Recursively parse children (limit depth to preserve performance)
     for (let i = 0; i < el.children.length; i++) {
       const childEl = el.children[i] as HTMLElement;
       if (childEl) {
@@ -156,6 +168,7 @@ export function buildInterfaceGraph(): InterfaceGraph {
   const rootNode = parseNode(document.body) || {
     id: 'root',
     role: 'content',
+    confidence: 0.50,
     tag: 'body',
     selector: 'body',
     text: '',
@@ -163,6 +176,8 @@ export function buildInterfaceGraph(): InterfaceGraph {
     boundingBox: { x: 0, y: 0, width: window.innerWidth, height: window.innerHeight },
     children: []
   };
+
+  const avgConfidence = totalNodes > 0 ? roundTwo(totalConfidenceSum / totalNodes) : 0.50;
 
   return {
     pageUrl: window.location.href,
@@ -176,7 +191,8 @@ export function buildInterfaceGraph(): InterfaceGraph {
       searchCount,
       filterCount,
       actionCount,
-      inputCount
+      inputCount,
+      avgConfidence
     }
   };
 }

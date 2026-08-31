@@ -1,6 +1,5 @@
 """
-CUIX Task 2 Testing Harness: Site Evaluator
-Loads representative HTML site benchmarks and evaluates site-agnostic UI element classification accuracy.
+CUIX Task 3 Testing Harness: Multi-Signal Site Evaluator with Confidence Scoring
 """
 
 from html.parser import HTMLParser
@@ -25,8 +24,8 @@ class BenchmarkHTMLParser(HTMLParser):
             "placeholder": attr_dict.get('placeholder', '')
         })
 
-def classify_element(el: Dict[str, Any]) -> str:
-    """Python implementation of CUIX site-agnostic classification rules."""
+def classify_element_with_confidence(el: Dict[str, Any]) -> Tuple[str, float]:
+    """Python implementation of Task 3 multi-signal classification with confidence score."""
     tag = el["tag"]
     role = el["role"].lower()
     aria_label = el["aria_label"].lower()
@@ -36,29 +35,39 @@ def classify_element(el: Dict[str, Any]) -> str:
 
     # Search
     if type_attr == 'search' or 'search' in id_class or role == 'search' or 'search' in placeholder or 'search' in aria_label:
-        return 'search'
+        conf = 0.70
+        if type_attr == 'search': conf += 0.25
+        if role == 'search': conf += 0.20
+        return 'search', min(round(conf, 2), 0.98)
 
     # Filter
     if 'filter' in id_class or 'sort' in id_class or 'filter' in aria_label or 'sort' in aria_label or 'filter' in placeholder:
-        return 'filter'
+        conf = 0.65
+        if 'filter' in aria_label or 'sort' in aria_label: conf += 0.25
+        return 'filter', min(round(conf, 2), 0.95)
 
     # Input
     if tag in ['input', 'textarea', 'select']:
-        return 'input'
+        return 'input', 0.92
 
     # Navigation
     if tag == 'nav' or role == 'navigation' or 'nav' in id_class:
-        return 'navigation'
+        conf = 0.65
+        if tag == 'nav': conf += 0.30
+        return 'navigation', min(round(conf, 2), 0.98)
 
     # Action / Button
     if tag in ['button', 'a'] or role == 'button' or 'btn' in id_class:
-        return 'action'
+        conf = 0.60
+        if tag == 'button': conf += 0.35
+        if role == 'button': conf += 0.25
+        return 'action', min(round(conf, 2), 0.98)
 
     # Heading
     if tag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] or role == 'heading':
-        return 'heading'
+        return 'heading', 0.95
 
-    return 'content'
+    return 'content', 0.50
 
 class SiteBenchmarkEvaluator:
     def __init__(self, fixtures_dir: str):
@@ -74,24 +83,27 @@ class SiteBenchmarkEvaluator:
 
         role_counts: Dict[str, int] = {}
         classified_list = []
+        conf_sum = 0.0
 
         for el in parser.elements:
-            role = classify_element(el)
+            role, conf = classify_element_with_confidence(el)
             role_counts[role] = role_counts.get(role, 0) + 1
+            conf_sum += conf
             classified_list.append({
                 "tag": el["tag"],
                 "selector": f"{el['tag']}{'#' + el['id'] if el['id'] else ''}{'.' + el['class'] if el['class'] else ''}",
-                "classified_role": role
+                "classified_role": role,
+                "confidence": conf
             })
 
         total_nodes = len(parser.elements)
-        actionable_count = role_counts.get('search', 0) + role_counts.get('filter', 0) + role_counts.get('action', 0) + role_counts.get('input', 0)
+        avg_conf = round(conf_sum / max(total_nodes, 1), 2)
 
         return {
             "file": filename,
             "total_nodes": total_nodes,
+            "avg_confidence": avg_conf,
             "role_counts": role_counts,
-            "actionable_ratio": round(actionable_count / max(total_nodes, 1), 2),
             "classified_elements": classified_list
         }
 

@@ -22,6 +22,7 @@ export interface BoundingBox {
 export interface InterfaceNode {
   id: string;
   role: ElementRole;
+  confidence: number; // Task 3: Classification Confidence Score [0.00 to 1.00]
   tag: string;
   selector: string;
   text: string;
@@ -44,6 +45,7 @@ export interface InterfaceGraph {
     filterCount: number;
     actionCount: number;
     inputCount: number;
+    avgConfidence: number;
   };
 }
 
@@ -72,11 +74,11 @@ export interface TelemetryEvent {
 
 export interface UserTwinProfile {
   userId: string;
-  searchPreferenceScore: number;  // 0.0 (visual menu explorer) -> 1.0 (heavy search bar user)
-  keyboardUsageRatio: number;      // Ratio of keyboard shortcuts/nav to clicks
-  menuDepthPreference: number;     // Tendency to drill down nested menus
-  backtrackingRate: number;        // Frequency of back actions
-  avgDecisionTimeMs: number;       // Mean pause time prior to interaction
+  searchPreferenceScore: number;
+  keyboardUsageRatio: number;
+  menuDepthPreference: number;
+  backtrackingRate: number;
+  avgDecisionTimeMs: number;
   sampleCount: number;
 }
 
@@ -84,7 +86,7 @@ export type FrictionLevel = 'NORMAL' | 'POSSIBLE_FRICTION' | 'HIGH_FRICTION';
 
 export interface FrictionAssessment {
   level: FrictionLevel;
-  score: number; // 0.0 to 1.0
+  score: number;
   reasons: string[];
   timestamp: number;
 }
