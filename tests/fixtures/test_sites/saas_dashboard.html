@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CloudMetrics — Admin Dashboard</title>
+</head>
+<body>
+  <div class="sidebar-menu" role="navigation">
+    <a href="/dashboard">Overview</a>
+    <a href="/analytics">Analytics</a>
+    <a href="/settings">Settings</a>
+  </div>
+
+  <main class="dashboard-content">
+    <h1>System Status</h1>
+    <div class="toolbar">
+      <input type="text" class="searchbox" placeholder="Filter metrics...">
+      <button class="btn btn-primary" id="btn-export">Export CSV</button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Server</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>us-east-1</td>
+          <td>Active</td>
+          <td><button class="action-trigger" role="button">Restart</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

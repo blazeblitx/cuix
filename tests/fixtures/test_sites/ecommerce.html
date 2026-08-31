@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apex Outfitters — Backpack Store</title>
+</head>
+<body>
+  <nav class="main-nav">
+    <a href="/">Home</a>
+    <a href="/products">Products</a>
+    <a href="/cart">Cart</a>
+  </nav>
+
+  <header>
+    <h1>Find Your Gear</h1>
+    <input type="search" id="site-search" placeholder="Search backpacks, boots..." aria-label="Product Search">
+  </header>
+
+  <aside class="sidebar-filters">
+    <h3>Filter By</h3>
+    <div class="filter-group">
+      <label>Price Range</label>
+      <input type="range" class="filter-slider" min="0" max="500">
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn" aria-label="Filter Under $50">Under $50</button>
+      <button class="filter-btn" aria-label="Filter Black Color">Black Color</button>
+    </div>
+  </aside>
+
+  <main class="product-grid">
+    <article class="product-card">
+      <h2>Tactical Black Backpack</h2>
+      <span class="price">$89.99</span>
+      <button class="btn cta-btn">Add to Cart</button>
+    </article>
+  </main>
+</body>
+</html>
