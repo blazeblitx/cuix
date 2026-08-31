@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CUIX Engine Control</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      width: 280px;
+      margin: 0;
+      padding: 16px;
+      background: #0f172a;
+      color: #f8fafc;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #38bdf8;
+    }
+    .status-badge {
+      font-size: 11px;
+      background: #065f46;
+      color: #34d399;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+    .metric-card {
+      background: #1e293b;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .metric-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-top: 4px;
+    }
+    .rollback-btn {
+      width: 100%;
+      padding: 8px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">🚀 CUIX Engine</div>
+    <span class="status-badge">ACTIVE</span>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">User Twin State</div>
+    <div class="metric-value">Active (Confidence 88%)</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Detected Interaction Friction</div>
+    <div class="metric-value" style="color: #34d399;">Low (0.12)</div>
+  </div>
+
+  <button class="rollback-btn" id="rollback">Undo CUIX Adaptations</button>
+</body>
+</html>

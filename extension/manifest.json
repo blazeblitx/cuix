@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "CUIX — Cognitive UI Engine",
+  "version": "0.1.0",
+  "description": "Adaptive Browser Extension for Frictionless Web Interaction and Personal Interaction Twin Modeling.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "dist/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "CUIX Interface Intelligence"
+  }
+}

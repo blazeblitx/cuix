@@ -1,0 +1,15 @@
+{
+  "name": "cuix-extension",
+  "version": "0.1.0",
+  "description": "CUIX — Cognitive User Interface eXtension",
+  "main": "dist/background.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/chrome": "^0.0.260"
+  }
+}
