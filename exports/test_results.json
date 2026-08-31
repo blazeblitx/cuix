@@ -1,0 +1,65 @@
+{
+  "experiment_id": "exp_run_3075",
+  "trials_per_group": 10,
+  "group_summaries": {
+    "GROUP_A_CONTROL": {
+      "task_success_rate": {
+        "mean": 0.649,
+        "ci95": 0.023
+      },
+      "task_completion_time_sec": {
+        "mean": 13.707,
+        "ci95": 0.703
+      },
+      "error_rate": {
+        "mean": 3.178,
+        "ci95": 0.146
+      },
+      "disruption_cls": {
+        "mean": 0.0,
+        "ci95": 0.0
+      }
+    },
+    "GROUP_B_RULE_BASED": {
+      "task_success_rate": {
+        "mean": 0.765,
+        "ci95": 0.013
+      },
+      "task_completion_time_sec": {
+        "mean": 11.144,
+        "ci95": 0.672
+      },
+      "error_rate": {
+        "mean": 2.067,
+        "ci95": 0.127
+      },
+      "disruption_cls": {
+        "mean": 0.454,
+        "ci95": 0.019
+      }
+    },
+    "GROUP_C_FULL_CUIX": {
+      "task_success_rate": {
+        "mean": 0.919,
+        "ci95": 0.012
+      },
+      "task_completion_time_sec": {
+        "mean": 7.767,
+        "ci95": 0.432
+      },
+      "error_rate": {
+        "mean": 0.855,
+        "ci95": 0.039
+      },
+      "disruption_cls": {
+        "mean": 0.051,
+        "ci95": 0.004
+      }
+    }
+  },
+  "key_takeaways": {
+    "tsr_improvement_cuix_vs_control": 0.27,
+    "time_reduction_cuix_vs_control_sec": 5.94,
+    "disruption_reduction_cuix_vs_rule_based_pct": 88.8
+  }
+}
