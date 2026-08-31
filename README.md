@@ -1,24 +1,12 @@
 # 🚀 CUIX — Cognitive User Interface eXtension
 
-> **Adaptive Browser Engine for Frictionless Web Interaction**
+> **Adaptive Browser Engine for Frictionless Web Interaction & Personal User Twin Modeling**
 
-CUIX is an intelligent browser extension that observes how users interact with web applications, builds a generalized **Personal Interaction Twin**, automatically detects cognitive friction, simulates potential UI adaptations using a **Counterfactual Simulator**, and applies **minimum-disruption adaptations** in real time.
-
----
-
-## 🎯 Master Roadmap & Fallback Levels
-
-| Level | Scope | Capabilities | Status |
-|---|---|---|---|
-| **Level 1** | Minimum Viable | Web understanding, telemetry recording, user twin modeling, action prediction | 🚧 Phase 0 - Phase 4 |
-| **Level 2** | Research Core | Task progression tracker + Cross-site user twin transfer evaluation | 📋 Phase 5 & Phase 7 |
-| **Level 3** | Adaptive Engine | Real-time interaction friction detector (ML classification) | 📋 Phase 6 |
-| **Level 4** | Predictive Counterfactual | Multi-candidate intervention simulator & low-disruption optimizer | 📋 Phase 8 - Phase 10 |
-| **Level 5** | Closed-Loop Autonomous | Real DOM adaptation layer, safe rollback controller, closed-loop model update | 📋 Phase 11 - Phase 14 |
+CUIX is a real-time, browser-native adaptive system that analyzes unfamiliar web interfaces, models personal user interaction behavior (Personal Interaction Twin), detects cognitive friction, evaluates counterfactual interventions using a low-disruption optimization engine, and dynamically applies minimal effective visual/structural adaptations.
 
 ---
 
-## 📐 Architecture Overview
+## 🗺️ System Architecture
 
 ```
                          ┌──────────────┐
@@ -26,29 +14,42 @@ CUIX is an intelligent browser extension that observes how users interact with w
                          └──────┬───────┘
                                 ↓
                    ┌────────────────────────┐
-                   │ 1. INTERFACE GRAPH     │
+                   │  1. WEB UNDERSTANDING  │
                    │ (DOM + A11y + Visual)  │
+                   └────────────┬───────────┘
+                                ↓
+                   ┌────────────────────────┐
+                   │   2. INTERFACE GRAPH   │
                    └────────────┬───────────┘
                                 ↓
              ┌──────────────────┴─────────────────┐
              ↓                                    ↓
    ┌────────────────────┐               ┌────────────────────┐
-   │ 2. USER TWIN       │               │ 3. TASK ENGINE     │
+   │   3. USER TWIN     │               │ 4. TASK MODEL      │
    │ (Behavior Profile) │               │ (Goal Progression) │
    └──────────┬─────────┘               └──────────┬─────────┘
               └──────────────────┬─────────────────┘
                                  ↓
                     ┌────────────────────────┐
-                    │ 4. FRICTION DETECTOR   │
+                    │  5. FRICTION DETECTOR  │
                     └────────────┬───────────┘
                                  ↓
                     ┌────────────────────────┐
-                    │ 5. COUNTERFACTUAL SIM  │
-                    │ & UTILITY OPTIMIZER    │
+                    │ 6. INTERVENTION ENGINE │
                     └────────────┬───────────┘
                                  ↓
                     ┌────────────────────────┐
-                    │ 6. ADAPTATION LAYER    │
+                    │ 7. COUNTERFACTUAL      │
+                    │       SIMULATOR        │
+                    └────────────┬───────────┘
+                                 ↓
+                    ┌────────────────────────┐
+                    │ 8. OPTIMIZER           │
+                    │ Utility = Gain-Disrupt │
+                    └────────────┬───────────┘
+                                 ↓
+                    ┌────────────────────────┐
+                    │ 9. ADAPTATION LAYER    │
                     └────────────┬───────────┘
                                  ↓
                               USER
@@ -56,33 +57,36 @@ CUIX is an intelligent browser extension that observes how users interact with w
 
 ---
 
-## 👥 Team Work Breakdown Structure (6 Sub-Teams)
+## 🎯 Master Fallback Levels & Progress
 
-- **Team 1 — Browser & Runtime**: Manifest V3 Content Scripting, DOM Observers, Adaptation Injection Engine, Rollback Controller.
-- **Team 2 — Interface Intelligence**: Semantic UI Classification, Accessible Tree Parsing, Interface Graph Generation.
-- **Team 3 — User Interaction Twin**: Telemetry Processing, Dwell/Navigation Feature Extraction, Personal Interaction Twin.
-- **Team 4 — Task & Friction Analysis**: Task Goal Representation, Progression Tracking, Friction Detection Classifiers.
-- **Team 5 — Counterfactual Simulation & Optimization**: Multi-Intervention Generator, Outcome Simulator, Utility Optimization.
-- **Team 6 — Platform Infrastructure & Evaluation**: Dashboard, Closed-Loop Telemetry, Automated Benchmark Suite, Patent/Paper Documentation.
+| Level | Scope | Capabilities | Status |
+|---|---|---|---|
+| **Level 1** | Minimum Viable | Site-agnostic UI Graph, Telemetry Recorder, Personal User Twin vector | ✅ Implemented |
+| **Level 2** | Research Core | Task Goal Progression Tracker + Cross-Site Generalization Testbed | ✅ Implemented |
+| **Level 3** | Adaptive Engine | ML Interaction Friction Classifier (Dwell, Backtrack & Stale Signals) | ✅ Implemented |
+| **Level 4** | Predictive Counterfactual | Multi-Candidate Generator, Counterfactual Simulator & Utility Optimizer | ✅ Implemented |
+| **Level 5** | Closed-Loop Autonomous | Real DOM Adaptation Injection Layer, Rollback Manager & Dashboard | ✅ Implemented |
 
 ---
 
-## 🛠️ Repository Quickstart
+## 🛠️ Repository Structure
+
+- `docs/`: Architecture specifications, privacy boundary rules, evaluation metrics, phase timeline.
+- `extension/`: Manifest V3 extension, content script DOM observer, interface graph builder, popup & dashboard.
+- `core/`: Python engine modules for UI Graph Parsing, Telemetry Processing, User Twin, Task Engine, Friction Detector, Counterfactual Simulator, Utility Optimizer, Adaptation Controller.
+- `tests/`: Automated unit & integration tests.
+
+---
+
+## 🧪 Running Verification Tests
 
 ```bash
-# Clone & install dependencies
-cd extension
-npm install
-
-# Build extension for development
-npm run build
+# Run complete Python engine test suite
+python3 -m unittest discover -s tests -p "test_*.py"
 ```
 
 ---
 
-## 📄 Documentation
+## 📄 License & IP
 
-- [System Architecture Specification](docs/ARCHITECTURE.md)
-- [Privacy & Safety Rules](docs/PRIVACY_SAFETY.md)
-- [Evaluation Metrics & Benchmarks](docs/METRICS.md)
-- [Complete 16-Phase Timeline](docs/PHASE_ROADMAP.md)
+Formulated for research paper publication & patent filing: *"Personalized counterfactual evaluation and minimum-disruption intervention selection for previously unseen web interfaces."*

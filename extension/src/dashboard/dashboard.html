@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🚀 CUIX — Real-time Cognitive Intelligence Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #1e293b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      font-size: 12px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .metric-val {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .meter {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .meter-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .candidate-item {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .candidate-item.selected {
+      border-color: var(--success);
+      background: rgba(52, 211, 153, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      🚀 CUIX System Dashboard
+      <span class="badge">Closed-Loop Active</span>
+    </div>
+    <div>Session: <strong style="color: var(--accent);">#sess_live_001</strong></div>
+  </div>
+
+  <div class="grid">
+    <!-- User Twin -->
+    <div class="card">
+      <div class="card-title">🧑 Personal User Twin</div>
+      <div class="metric-row">
+        <span>Search Preference:</span>
+        <span class="metric-val">0.82 (Search Heavy)</span>
+      </div>
+      <div class="meter"><div class="meter-fill" style="width: 82%;"></div></div>
+
+      <div class="metric-row" style="margin-top: 16px;">
+        <span>Keyboard Shortcut Ratio:</span>
+        <span class="metric-val">0.64</span>
+      </div>
+      <div class="meter"><div class="meter-fill" style="width: 64%;"></div></div>
+
+      <div class="metric-row" style="margin-top: 16px;">
+        <span>Avg Decision Time:</span>
+        <span class="metric-val">2.4 sec</span>
+      </div>
+    </div>
+
+    <!-- Interface Graph -->
+    <div class="card">
+      <div class="card-title">🌐 Interface Graph Topology</div>
+      <div class="metric-row"><span>Total Discovered Nodes:</span><span class="metric-val">45</span></div>
+      <div class="metric-row"><span>Actionable Controls:</span><span class="metric-val">12</span></div>
+      <div class="metric-row"><span>Filter Components:</span><span class="metric-val">3</span></div>
+      <div class="metric-row"><span>Navigation Bar Depth:</span><span class="metric-val">2 Levels</span></div>
+      <div class="metric-row"><span>Interface Complexity:</span><span class="metric-val" style="color: var(--warning);">0.42 (Moderate)</span></div>
+    </div>
+
+    <!-- Friction & Intervention Simulator -->
+    <div class="card">
+      <div class="card-title">⚠️ Friction & Counterfactual Engine</div>
+      <div class="metric-row">
+        <span>Friction Probability:</span>
+        <span class="metric-val" style="color: var(--danger);">0.72 (High Friction)</span>
+      </div>
+
+      <div style="margin-top: 16px; font-weight: 600; font-size: 13px; margin-bottom: 8px;">Top Candidate Interventions:</div>
+      
+      <div class="candidate-item selected">
+        <div style="display:flex; justify-content:space-between;">
+          <strong style="color: var(--success);">Option A: Highlight Filter Button</strong>
+          <span style="color: var(--success);">Utility: +0.23</span>
+        </div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Disruption: Low (0.05) | Success Gain: +28%</div>
+      </div>
+
+      <div class="candidate-item">
+        <div style="display:flex; justify-content:space-between;">
+          <span>Option B: Move Filter Menu</span>
+          <span>Utility: +0.02</span>
+        </div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Disruption: High (0.60) | Penalty High</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
