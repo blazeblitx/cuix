@@ -1,5 +1,5 @@
 """
-Unit tests for CUIX Interface Graph Analyzer (Phase 2)
+Unit tests for CUIX Interface Graph Analyzer (Phase 2 & Task 3/4)
 """
 
 import unittest
@@ -16,11 +16,13 @@ MOCK_GRAPH = {
         "searchCount": 1,
         "filterCount": 3,
         "actionCount": 12,
-        "inputCount": 2
+        "inputCount": 2,
+        "avgConfidence": 0.92
     },
     "root": {
         "id": "node_1",
         "role": "content",
+        "confidence": 0.90,
         "tag": "body",
         "selector": "body",
         "text": "",
@@ -30,6 +32,7 @@ MOCK_GRAPH = {
             {
                 "id": "node_2",
                 "role": "search",
+                "confidence": 0.95,
                 "tag": "input",
                 "selector": "#search-input",
                 "text": "",
@@ -41,6 +44,7 @@ MOCK_GRAPH = {
             {
                 "id": "node_3",
                 "role": "filter",
+                "confidence": 0.88,
                 "tag": "button",
                 "selector": ".filter-btn",
                 "text": "Filter by Price",
