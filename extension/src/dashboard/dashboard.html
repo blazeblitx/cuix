@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🚀 CUIX — Real-time Cognitive Intelligence Dashboard</title>
+  <title>🚀 CUIX — Real-time Cognitive Research Dashboard</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -49,7 +49,7 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 20px;
     }
     .card {
@@ -65,6 +65,8 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
     }
     .metric-row {
       display: flex;
@@ -98,21 +100,33 @@
       border-color: var(--success);
       background: rgba(52, 211, 153, 0.05);
     }
+    .exp-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .exp-box {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="title">
-      🚀 CUIX System Dashboard
+      🚀 CUIX Research Dashboard
       <span class="badge">Closed-Loop Active</span>
     </div>
     <div>Session: <strong style="color: var(--accent);">#sess_live_001</strong></div>
   </div>
 
   <div class="grid">
-    <!-- User Twin -->
+    <!-- User Twin & Learning History -->
     <div class="card">
-      <div class="card-title">🧑 Personal User Twin</div>
+      <div class="card-title">🧑 Personal User Twin <span>Uncertainty: 0.22 (Low)</span></div>
       <div class="metric-row">
         <span>Search Preference:</span>
         <span class="metric-val">0.82 (Search Heavy)</span>
@@ -120,7 +134,7 @@
       <div class="meter"><div class="meter-fill" style="width: 82%;"></div></div>
 
       <div class="metric-row" style="margin-top: 16px;">
-        <span>Keyboard Shortcut Ratio:</span>
+        <span>Keyboard Usage Ratio:</span>
         <span class="metric-val">0.64</span>
       </div>
       <div class="meter"><div class="meter-fill" style="width: 64%;"></div></div>
@@ -131,40 +145,54 @@
       </div>
     </div>
 
-    <!-- Interface Graph -->
+    <!-- Interface Graph Topology & Confidence -->
     <div class="card">
-      <div class="card-title">🌐 Interface Graph Topology</div>
-      <div class="metric-row"><span>Total Discovered Nodes:</span><span class="metric-val">45</span></div>
+      <div class="card-title">🌐 Interface Graph Topology <span>Avg Confidence: 0.94</span></div>
+      <div class="metric-row"><span>Total Extracted Nodes:</span><span class="metric-val">45</span></div>
       <div class="metric-row"><span>Actionable Controls:</span><span class="metric-val">12</span></div>
       <div class="metric-row"><span>Filter Components:</span><span class="metric-val">3</span></div>
-      <div class="metric-row"><span>Navigation Bar Depth:</span><span class="metric-val">2 Levels</span></div>
-      <div class="metric-row"><span>Interface Complexity:</span><span class="metric-val" style="color: var(--warning);">0.42 (Moderate)</span></div>
+      <div class="metric-row"><span>Classification Source:</span><span class="metric-val" style="color: var(--success);">Deterministic DOM/A11y</span></div>
+      <div class="metric-row"><span>Interface Visual Load:</span><span class="metric-val" style="color: var(--warning);">0.42 (Moderate)</span></div>
     </div>
 
-    <!-- Friction & Intervention Simulator -->
+    <!-- Friction & Counterfactual Simulator -->
     <div class="card">
       <div class="card-title">⚠️ Friction & Counterfactual Engine</div>
       <div class="metric-row">
-        <span>Friction Probability:</span>
-        <span class="metric-val" style="color: var(--danger);">0.72 (High Friction)</span>
+        <span>Friction Level:</span>
+        <span class="metric-val" style="color: var(--danger);">HIGH_FRICTION (0.74)</span>
       </div>
 
-      <div style="margin-top: 16px; font-weight: 600; font-size: 13px; margin-bottom: 8px;">Top Candidate Interventions:</div>
-      
+      <div style="margin-top: 12px; font-weight: 600; font-size: 13px; margin-bottom: 8px;">Selected Intervention (Utility Maximized):</div>
       <div class="candidate-item selected">
         <div style="display:flex; justify-content:space-between;">
           <strong style="color: var(--success);">Option A: Highlight Filter Button</strong>
           <span style="color: var(--success);">Utility: +0.23</span>
         </div>
-        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Disruption: Low (0.05) | Success Gain: +28%</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Predicted Success: 82% | Disruption: 0.05 (Low)</div>
       </div>
+    </div>
 
-      <div class="candidate-item">
-        <div style="display:flex; justify-content:space-between;">
-          <span>Option B: Move Filter Menu</span>
-          <span>Utility: +0.02</span>
+    <!-- Strategy Experiment Comparison View -->
+    <div class="card" style="grid-column: span 2;">
+      <div class="card-title">🔬 Experiment Comparison View (Naive Greedy vs CUIX Optimizer)</div>
+      <div class="exp-comparison">
+        <div class="exp-box">
+          <div style="font-weight: 600; color: var(--danger);">Strategy A: Greedy Naive Selection</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">
+            <div>Picked: Reposition Menu Accordion</div>
+            <div>Raw Success Rate: 84%</div>
+            <div>Disruption Penalty (CLS): <strong style="color: var(--danger);">0.60 (High Visual Noise)</strong></div>
+          </div>
         </div>
-        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Disruption: High (0.60) | Penalty High</div>
+        <div class="exp-box" style="border-color: var(--success);">
+          <div style="font-weight: 600; color: var(--success);">Strategy B: CUIX Utility Optimizer</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">
+            <div>Picked: Highlight Filter Button</div>
+            <div>Raw Success Rate: 82%</div>
+            <div>Disruption Penalty (CLS): <strong style="color: var(--success);">0.05 (91.6% Reduction)</strong></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
